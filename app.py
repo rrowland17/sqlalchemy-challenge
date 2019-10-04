@@ -48,7 +48,12 @@ def prcp():
     return jsonify(prcp_app)
 
 #route 3
+@app.route("/api/v1.0/stations")
+def stations():
 
+    station_list = session.query(Station.station).all()
+
+    return jsonify(station_list)
 
 #Define main behavior
 if __name__ == "__main__":
