@@ -25,12 +25,10 @@ app = Flask(__name__)
 #route 1
 @app.route("/")
 def home():
-    return (f"Here are the routes"
-            f"/api/v1.0/precipitation"
-            f"/api/v1.0/stations"
-            f"/api/v1.0/tobs"
-            f"/api/v1.0/<start>"
-            f"/api/v1.0/<start>/<end>"
+    return (f"Here are the routes:<br/>"
+            f"/api/v1.0/precipitation<br/>"
+            f"/api/v1.0/stations<br/>"
+            f"/api/v1.0/tobs<br/>"
     )
 
 #route 2
@@ -54,6 +52,18 @@ def stations():
     station_list = session.query(Station.station).all()
 
     return jsonify(station_list)
+
+#route 4
+@app.route("/api/v1.0/tobs")
+def tobs():
+
+    one_year = dt.date(2017,8,23) - dt.timedelta(days=365)
+
+    data2 = session.query(Measurement.tobs).\
+    filter(Measurement.station == "USC00519281").\
+    filter(Measurement.date >= one_year).all()
+
+    return jsonify(data2)
 
 #Define main behavior
 if __name__ == "__main__":
